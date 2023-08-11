@@ -1,5 +1,5 @@
-# Spring-boot-workouts
-This project contains my workouts while learning the framework - Spring boot.
+## Spring-boot-workouts
+This repository contains my workouts while learning the framework - Spring boot.
 
 It contains few related to 
 1. Rendering html views ( which uses thymeleaf as a view engine)
