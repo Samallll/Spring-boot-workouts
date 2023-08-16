@@ -7,3 +7,4 @@ It contains few related to
 3. Login page created using Spring Security.
 4. Login page created without using any security mechanism.
 5. Used redis as a session store for session management.
+6. Started to work on Student Management System
