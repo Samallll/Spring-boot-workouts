@@ -1,6 +1,5 @@
 package com.example.sms.controller;
 
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,17 @@ public class StudentController {
 		return "edit_student.html";
 	}
 	
-	@GetMapping("/students/edit")
-	public String editStudent(@ModelAttribute("student") Student s) {
+	@PostMapping("/students/{id}")
+	public String updateStudent(@PathVariable Long id, @ModelAttribute Student s) {
 		
-		return return "redirect:/students";
+		studentService.addStudent(s);
+		return "redirect:/students";
+	}
+	
+	@GetMapping("/students/delete/{id}")
+	public String deleteStudent(@PathVariable Long id, @ModelAttribute Student s) {
+		
+		studentService.deleteStudent(id);
+		return "redirect:/students";
 	}
 }
