@@ -12,16 +12,23 @@ import org.springframework.stereotype.Service;
 
 import com.example.ls.model.ApplicationUser;
 import com.example.ls.model.Role;
+import com.example.ls.repository.RoleRepository;
 import com.example.ls.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserService implements UserDetailsService{
 	
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private RoleRepository roleRepository;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,6 +43,16 @@ public class UserService implements UserDetailsService{
 //		return new ApplicationUser(1,"Ethan",passwordEncoder.encode("password"),authorities); 
 		
 		return userRepository.findByUserName(username).orElseThrow();
+	}
+	
+	public ApplicationUser registerUser(String userName, String password) {
+		
+		Role userRole = roleRepository.findByAuthority("USER").get();
+		
+		Set<Role> roles = new HashSet<Role>();
+		roles.add(userRole);
+		
+		return userRepository.save(new ApplicationUser(1,userName,encoder.encode(password),roles));
 	}
 
 }

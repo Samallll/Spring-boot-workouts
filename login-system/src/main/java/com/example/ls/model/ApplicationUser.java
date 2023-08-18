@@ -27,7 +27,7 @@ public class ApplicationUser implements UserDetails{
 	@Column(name="user_id")
 	private Integer id;
 
-	@Column(name="userName")
+	@Column(name="userName",unique=true)
 	private String userName;
 	
 	@Column(name="password")
@@ -69,6 +69,14 @@ public class ApplicationUser implements UserDetails{
 		return this.authorities;
 	}
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public void setAuthorities(Set<Role> authorities) {
 		this.authorities=authorities;
 	}
