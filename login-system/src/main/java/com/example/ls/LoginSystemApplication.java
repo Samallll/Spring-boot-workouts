@@ -26,26 +26,17 @@ public class LoginSystemApplication {
 		
 		return args -> {
 			
-//			Creating an user role when the application executes (for testing purpose).
-			Role userRole = roleRepo.save(new Role("USER"));
-			
-			Set<Role> userRoles = new HashSet<>();
-			userRoles.add(userRole);
-			
-			ApplicationUser user = new ApplicationUser(1,"user",encoder.encode("user"),userRoles);
-			userRepo.save(user);
-			
 //			If admin role is present in the table then no need to create a separate admin role. For ddl-auto:update , it is used.
 			if(roleRepo.findByAuthority("ADMIN").isPresent()) return;
 			
 //			Creating a admin role when the application executes if there is no admins.
 			Role adminRole = roleRepo.save(new Role("ADMIN"));
+			roleRepo.save(new Role("USER"));
 			
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
-			roles.add(userRole);
 			
-			ApplicationUser admin = new ApplicationUser("admin",encoder.encode("admin"),roles);
+			ApplicationUser admin = new ApplicationUser(1,"admin",encoder.encode("admin"),roles);
 			userRepo.save(admin);
 			
 			};
