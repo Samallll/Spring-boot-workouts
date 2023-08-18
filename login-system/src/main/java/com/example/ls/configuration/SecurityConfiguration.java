@@ -7,10 +7,11 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.ls.service.UserService;
 
 @Configuration
 public class SecurityConfiguration {
@@ -21,7 +22,7 @@ public class SecurityConfiguration {
 	}
 	
 	@Bean
-	public AuthenticationManager authManager(UserDetailsService userDetailsService) {
+	public AuthenticationManager authManager(UserService userDetailsService) {
 		
 		DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
 		daoProvider.setUserDetailsService(userDetailsService);
@@ -34,8 +35,8 @@ public class SecurityConfiguration {
 				csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorize -> 
 				{	
-					authorize.requestMatchers("/register/**").permitAll();
-					authorize.anyRequest().permitAll();
+					authorize.requestMatchers("/register/**").hasAuthority("ADMIN");
+					authorize.anyRequest().authenticated();
 				})
 				.httpBasic(Customizer.withDefaults())
 				.build();

@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService{
 		Set<Role> roles = new HashSet<Role>();
 		roles.add(userRole);
 		
-		return userRepository.save(new ApplicationUser(1,userName,encoder.encode(password),roles));
+		return userRepository.save(new ApplicationUser(userName,encoder.encode(password),roles));
 	}
 
 }
