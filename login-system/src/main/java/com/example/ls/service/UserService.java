@@ -12,9 +12,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.ls.model.ApplicationUser;
 import com.example.ls.model.Role;
+import com.example.ls.repository.UserRepository;
 
 @Service
 public class UserService implements UserDetailsService{
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -24,12 +28,14 @@ public class UserService implements UserDetailsService{
 		// TODO Auto-generated method stub
 		System.out.println("In user details service");
 		
-		if(!username.equals("Ethan")) throw new UsernameNotFoundException("user Name not found");
+//		if(!username.equals("Ethan")) throw new UsernameNotFoundException("user Name not found");
+//		
+//		Set<Role> authorities = new HashSet<>();
+//		authorities.add(new Role(1,"USER"));
+//		
+//		return new ApplicationUser(1,"Ethan",passwordEncoder.encode("password"),authorities); 
 		
-		Set<Role> authorities = new HashSet<>();
-		authorities.add(new Role(1,"USER"));
-		
-		return new ApplicationUser(1,"Ethan",passwordEncoder.encode("password"),authorities); 
+		return userRepository.findByUserName(username).orElseThrow();
 	}
 
 }
