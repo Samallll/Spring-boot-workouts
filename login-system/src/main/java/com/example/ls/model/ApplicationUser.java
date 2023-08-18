@@ -48,6 +48,13 @@ public class ApplicationUser implements UserDetails{
 		this.authorities = new HashSet<>();
 	}
 
+	public ApplicationUser(String userName, String password, Set<Role> authorities) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.authorities = authorities;
+	}
+
 	public ApplicationUser(Integer id, String userName, String password, Set<Role> authorities) {
 		super();
 		this.id = id;
