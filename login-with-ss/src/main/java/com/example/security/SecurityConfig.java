@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 	@Bean
 	public UserDetailsService userDetailsService() throws Exception{
 		UserDetails admin=User.builder()
@@ -29,12 +29,14 @@ public class SecurityConfig {
 				.build();
 		return new InMemoryUserDetailsManager(admin,user);
 	}
-	@SuppressWarnings("removal")
+	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests((authorize)->authorize.anyRequest().authenticated())
-			.formLogin().loginPage("/login").permitAll();
+			.formLogin((formLogin) ->
+ 				formLogin.loginPage("/login").permitAll());
 		return http.build();
+		
 	}
 
     @Bean
